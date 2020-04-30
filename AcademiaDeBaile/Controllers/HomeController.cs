@@ -30,7 +30,7 @@ namespace AcademiaDeBaile.Controllers
             var usuarioLogin = baseDatos.LoginUsuario1.Where(u => u.NombreUsuario.Equals(usuario)
                  && u.PasswordUsuario.Equals(password)).FirstOrDefault();
 
-            if (usuarioLogin != null )
+            if (usuarioLogin!= null )
             {
                 FormsAuthentication.SetAuthCookie(usuarioLogin.NombreUsuario, false);
                 return JsonConvert.SerializeObject(usuarioLogin);
