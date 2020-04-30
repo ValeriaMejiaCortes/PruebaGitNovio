@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="textBienvenido">
+        <h1>BIENVENIDO A NUESTRA ACADEMIA DE BAILE</h1>
+    </div>
+
+
+<div id="contenedor">
+    <div class="menu1">
+        @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "btn"})
+        @Html.ActionLink("Instructor", "Create", "Instructor", null, new { @class = "btn tooltipped",@data_position="top", @data_tooltip="Registrar un instructor"})
+        @Html.ActionLink("Bailarines", "Create", "Bailarin", null, new { @class = "btn tooltipped",@data_position="right", @data_tooltip="Registrar un nuevo bailarín"})
+    </div>
+    <div class="menu2">
+        @Html.ActionLink("Clases", "Create", "Clase", null, new { @class = "btn tooltipped",@data_position="left", @data_tooltip="Conocer los planes y costos"})
+        @Html.ActionLink("Planes", "Index", "Home", null, new { @class = "btn tooltipped",@data_position="bottom", @data_tooltip="Ver las clases ofrecidas"})
+    </div>
+</div>
+
+<div id="espacioInutil">
+
+</div>
+
+

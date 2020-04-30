@@ -1,0 +1,92 @@
+﻿body {
+    font-family: 'Bebas Neue', cursive;
+    color: #00c5f2;
+}
+
+#banner{
+    text-align: center;
+    font-weight: bold;
+    background-color: #224a5e;
+    color:white;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 0px;
+}
+
+/*#foooter {
+    text-align: center;
+    font-weight: bold;
+    background-color: #224a5e;
+    color: white;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 0px;
+}*/
+
+#boton {
+    font-family: 'Bebas Neue', cursive;
+    color: #00c5f2;
+}
+
+.container body-content{
+    height:1000px;
+}
+
+#BannerFondo {
+    height: 250px;
+}
+
+#imgPrincipal {
+    height: 250px;
+    display: block;
+    margin: auto;
+}
+
+#textBienvenido {
+    text-align: center;
+}
+
+.menu1 {
+    width:100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+.menu2 {
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom:50px;
+}
+
+
+.btn {
+    background-color: white;
+    color: #00c5f2;
+    font-family: 'Bebas Neue', cursive;
+    padding: 0px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    border: 1px solid #00c5f2;
+}
+.btn:hover {
+    background-color: white;
+    color: #007298;
+    font-family: 'bebas neue', cursive;
+    padding: 0px;
+    font-size: 20px;
+}
+
+#txtNombre{
+}
+
+
+#espacioInutil {
+    height: 50px;
+}
+
+
+
+

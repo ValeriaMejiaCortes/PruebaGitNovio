@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AcademiaDeBaileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bailarin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Documento" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Edad" Type="int" Nullable="false" />
+          <Property Name="Sexo" Type="nchar" MaxLength="8" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="IdPlan" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Clase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Horario" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Duración" Type="int" Nullable="false" />
+          <Property Name="IdInstructor" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClaseBailarin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="idClase" Type="bigint" Nullable="false" />
+          <Property Name="IdBailarin" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="Dirección" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+          <Property Name="AñosExperiencia" Type="bigint" Nullable="false" />
+          <Property Name="ExpertoEn" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginUsuario1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUsuario" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PasswordUsuario" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaIngreso" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Planes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Descripción" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Costo" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bailarin_Planes">
+          <End Role="Planes" Type="Self.Planes" Multiplicity="0..1" />
+          <End Role="Bailarin" Type="Self.Bailarin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bailarin">
+              <PropertyRef Name="IdPlan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clase_Instructor">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
+          <End Role="Clase" Type="Self.Clase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clase">
+              <PropertyRef Name="IdInstructor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaseBailarin_Bailarin">
+          <End Role="Bailarin" Type="Self.Bailarin" Multiplicity="1" />
+          <End Role="ClaseBailarin" Type="Self.ClaseBailarin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bailarin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaseBailarin">
+              <PropertyRef Name="IdBailarin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaseBailarin_Clase">
+          <End Role="Clase" Type="Self.Clase" Multiplicity="1" />
+          <End Role="ClaseBailarin" Type="Self.ClaseBailarin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaseBailarin">
+              <PropertyRef Name="idClase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AcademiaDeBaileModelStoreContainer">
+          <EntitySet Name="Bailarin" EntityType="Self.Bailarin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clase" EntityType="Self.Clase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClaseBailarin" EntityType="Self.ClaseBailarin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Instructor" EntityType="Self.Instructor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginUsuario1" EntityType="Self.LoginUsuario1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Planes" EntityType="Self.Planes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bailarin_Planes" Association="Self.FK_Bailarin_Planes">
+            <End Role="Planes" EntitySet="Planes" />
+            <End Role="Bailarin" EntitySet="Bailarin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clase_Instructor" Association="Self.FK_Clase_Instructor">
+            <End Role="Instructor" EntitySet="Instructor" />
+            <End Role="Clase" EntitySet="Clase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaseBailarin_Bailarin" Association="Self.FK_ClaseBailarin_Bailarin">
+            <End Role="Bailarin" EntitySet="Bailarin" />
+            <End Role="ClaseBailarin" EntitySet="ClaseBailarin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaseBailarin_Clase" Association="Self.FK_ClaseBailarin_Clase">
+            <End Role="Clase" EntitySet="Clase" />
+            <End Role="ClaseBailarin" EntitySet="ClaseBailarin" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AcademiaDeBaileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bailarin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Documento" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Edad" Type="Int32" Nullable="false" />
+          <Property Name="Sexo" Type="String" MaxLength="8" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClaseBailarin" Relationship="Self.FK_ClaseBailarin_Bailarin" FromRole="Bailarin" ToRole="ClaseBailarin" />
+          <Property Name="IdPlan" Type="Int64" />
+          <NavigationProperty Name="Planes" Relationship="AcademiaDeBaileModel.FK_Bailarin_Planes" FromRole="Bailarin" ToRole="Planes" />
+        </EntityType>
+        <EntityType Name="Clase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Horario" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Duración" Type="Int32" Nullable="false" />
+          <Property Name="IdInstructor" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Instructor" Relationship="Self.FK_Clase_Instructor" FromRole="Clase" ToRole="Instructor" />
+          <NavigationProperty Name="ClaseBailarin" Relationship="Self.FK_ClaseBailarin_Clase" FromRole="Clase" ToRole="ClaseBailarin" />
+        </EntityType>
+        <EntityType Name="ClaseBailarin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="idClase" Type="Int64" Nullable="false" />
+          <Property Name="IdBailarin" Type="Int64" Nullable="false" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Bailarin" Relationship="Self.FK_ClaseBailarin_Bailarin" FromRole="ClaseBailarin" ToRole="Bailarin" />
+          <NavigationProperty Name="Clase" Relationship="Self.FK_ClaseBailarin_Clase" FromRole="ClaseBailarin" ToRole="Clase" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Dirección" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AñosExperiencia" Type="Int64" Nullable="false" />
+          <Property Name="ExpertoEn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Clase" Relationship="Self.FK_Clase_Instructor" FromRole="Instructor" ToRole="Clase" />
+        </EntityType>
+        <EntityType Name="Planes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripción" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Costo" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Bailarin" Relationship="AcademiaDeBaileModel.FK_Bailarin_Planes" FromRole="Planes" ToRole="Bailarin" />
+        </EntityType>
+        <Association Name="FK_ClaseBailarin_Bailarin">
+          <End Role="Bailarin" Type="Self.Bailarin" Multiplicity="1" />
+          <End Role="ClaseBailarin" Type="Self.ClaseBailarin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bailarin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaseBailarin">
+              <PropertyRef Name="IdBailarin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Clase_Instructor">
+          <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
+          <End Role="Clase" Type="Self.Clase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clase">
+              <PropertyRef Name="IdInstructor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClaseBailarin_Clase">
+          <End Role="Clase" Type="Self.Clase" Multiplicity="1" />
+          <End Role="ClaseBailarin" Type="Self.ClaseBailarin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClaseBailarin">
+              <PropertyRef Name="idClase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AcademiaDeBaileEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bailarin" EntityType="Self.Bailarin" />
+          <EntitySet Name="Clase" EntityType="Self.Clase" />
+          <EntitySet Name="ClaseBailarin" EntityType="Self.ClaseBailarin" />
+          <EntitySet Name="Instructor" EntityType="Self.Instructor" />
+          <EntitySet Name="Planes" EntityType="Self.Planes" />
+          <AssociationSet Name="FK_ClaseBailarin_Bailarin" Association="Self.FK_ClaseBailarin_Bailarin">
+            <End Role="Bailarin" EntitySet="Bailarin" />
+            <End Role="ClaseBailarin" EntitySet="ClaseBailarin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Clase_Instructor" Association="Self.FK_Clase_Instructor">
+            <End Role="Instructor" EntitySet="Instructor" />
+            <End Role="Clase" EntitySet="Clase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClaseBailarin_Clase" Association="Self.FK_ClaseBailarin_Clase">
+            <End Role="Clase" EntitySet="Clase" />
+            <End Role="ClaseBailarin" EntitySet="ClaseBailarin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bailarin_Planes" Association="AcademiaDeBaileModel.FK_Bailarin_Planes">
+            <End Role="Planes" EntitySet="Planes" />
+            <End Role="Bailarin" EntitySet="Bailarin" />
+          </AssociationSet>
+          <EntitySet Name="LoginUsuario1" EntityType="AcademiaDeBaileModel.LoginUsuario1" />
+        </EntityContainer>
+        <Association Name="FK_Bailarin_Planes">
+          <End Type="AcademiaDeBaileModel.Planes" Role="Planes" Multiplicity="0..1" />
+          <End Type="AcademiaDeBaileModel.Bailarin" Role="Bailarin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bailarin">
+              <PropertyRef Name="IdPlan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LoginUsuario1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUsuario" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordUsuario" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FechaIngreso" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AcademiaDeBaileModelStoreContainer" CdmEntityContainer="AcademiaDeBaileEntities">
+          <EntitySetMapping Name="Bailarin">
+            <EntityTypeMapping TypeName="AcademiaDeBaileModel.Bailarin">
+              <MappingFragment StoreEntitySet="Bailarin">
+                <ScalarProperty Name="IdPlan" ColumnName="IdPlan" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clase">
+            <EntityTypeMapping TypeName="AcademiaDeBaileModel.Clase">
+              <MappingFragment StoreEntitySet="Clase">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Horario" ColumnName="Horario" />
+                <ScalarProperty Name="Duración" ColumnName="Duración" />
+                <ScalarProperty Name="IdInstructor" ColumnName="IdInstructor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClaseBailarin">
+            <EntityTypeMapping TypeName="AcademiaDeBaileModel.ClaseBailarin">
+              <MappingFragment StoreEntitySet="ClaseBailarin">
+                <ScalarProperty Name="idClase" ColumnName="idClase" />
+                <ScalarProperty Name="IdBailarin" ColumnName="IdBailarin" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Instructor">
+            <EntityTypeMapping TypeName="AcademiaDeBaileModel.Instructor">
+              <MappingFragment StoreEntitySet="Instructor">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="AñosExperiencia" ColumnName="AñosExperiencia" />
+                <ScalarProperty Name="ExpertoEn" ColumnName="ExpertoEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Planes">
+            <EntityTypeMapping TypeName="AcademiaDeBaileModel.Planes">
+              <MappingFragment StoreEntitySet="Planes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginUsuario1">
+            <EntityTypeMapping TypeName="AcademiaDeBaileModel.LoginUsuario1">
+              <MappingFragment StoreEntitySet="LoginUsuario1">
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="PasswordUsuario" ColumnName="PasswordUsuario" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

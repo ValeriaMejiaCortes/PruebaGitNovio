@@ -1,0 +1,27 @@
+﻿#banner {
+    background-color: #224a5e;
+    color: white;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 0px;
+}
+#btnIngresar {
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: #397a4e;
+    border: 1px solid #397a4e;
+}
+
+.login span {
+    font-size: 12px;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Odibee Sans';
+}
+
+nav {
+    background-color: #224a5ec2;
+}
